@@ -4,6 +4,7 @@ using ClinicAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicAPI.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    partial class ClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20231002202430_Adicionando relacionamento Appointment - Patient")]
+    partial class AdicionandorelacionamentoAppointmentPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,12 +44,10 @@ namespace ClinicAPI.Migrations
                         .HasColumnName("price");
 
                     b.Property<int>("ProfessionalId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_professional");
+                        .HasColumnType("int");
 
                     b.Property<int>("SpecialtyId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_specialty");
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -126,23 +127,6 @@ namespace ClinicAPI.Migrations
                     b.ToTable("professionals", (string)null);
                 });
 
-            modelBuilder.Entity("ClinicAPI.Models.Entities.ProfessionalSpecialty", b =>
-                {
-                    b.Property<int>("SpecialtyId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_specialty");
-
-                    b.Property<int>("ProfessionalId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_professional");
-
-                    b.HasKey("SpecialtyId", "ProfessionalId");
-
-                    b.HasIndex("ProfessionalId");
-
-                    b.ToTable("professionals_specialties", (string)null);
-                });
-
             modelBuilder.Entity("ClinicAPI.Models.Entities.Specialty", b =>
                 {
                     b.Property<int>("Id")
@@ -164,6 +148,21 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specialties", (string)null);
+                });
+
+            modelBuilder.Entity("ProfessionalSpecialty", b =>
+                {
+                    b.Property<int>("ProfessionalsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpecialtiesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfessionalsId", "SpecialtiesId");
+
+                    b.HasIndex("SpecialtiesId");
+
+                    b.ToTable("ProfessionalSpecialty");
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Appointment", b =>
@@ -193,23 +192,19 @@ namespace ClinicAPI.Migrations
                     b.Navigation("Specialty");
                 });
 
-            modelBuilder.Entity("ClinicAPI.Models.Entities.ProfessionalSpecialty", b =>
+            modelBuilder.Entity("ProfessionalSpecialty", b =>
                 {
-                    b.HasOne("ClinicAPI.Models.Entities.Professional", "Professional")
+                    b.HasOne("ClinicAPI.Models.Entities.Professional", null)
                         .WithMany()
-                        .HasForeignKey("ProfessionalId")
+                        .HasForeignKey("ProfessionalsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ClinicAPI.Models.Entities.Specialty", "Specialty")
+                    b.HasOne("ClinicAPI.Models.Entities.Specialty", null)
                         .WithMany()
-                        .HasForeignKey("SpecialtyId")
+                        .HasForeignKey("SpecialtiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Professional");
-
-                    b.Navigation("Specialty");
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Patient", b =>

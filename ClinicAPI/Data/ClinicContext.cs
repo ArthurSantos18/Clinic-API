@@ -5,27 +5,21 @@ namespace ClinicAPI.Data
 {
     public class ClinicContext : DbContext
     {
-        DbSet<Scheduling> Schedulings { get; set; }
-
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Specialty> Specialties { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Professional> Professionals { get; set; }
+        // public DbSet<ProfessionalSpecialty> ProfessionalSpecialties { get; set; }
         public ClinicContext(DbContextOptions options) : base(options)
         {
 
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            var schedulings = modelBuilder.Entity<Scheduling>();
-
-            schedulings.ToTable("schedulings");
-            schedulings.HasKey(s => s.Id);
-            schedulings.Property(s => s.Id).HasColumnName("id").ValueGeneratedOnAdd();
-            schedulings.Property(s => s.Name).HasColumnName("name").HasColumnType("varchar(100)").IsRequired();
-            schedulings.Property(s => s.Age).HasColumnName("age").HasColumnType("int").IsRequired();
-            schedulings.Property(s => s.Time).HasColumnName("time").HasColumnType("datetime").IsRequired();
-
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
-
     }
 }

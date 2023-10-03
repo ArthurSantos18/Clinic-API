@@ -17,7 +17,8 @@ namespace ClinicAPI
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<ClinicContext>(
-                options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database"),
+                assembly => assembly.MigrationsAssembly(typeof(ClinicContext).Assembly.FullName)));
 
             var app = builder.Build();
 
