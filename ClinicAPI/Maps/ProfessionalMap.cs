@@ -8,8 +8,8 @@ namespace ClinicAPI.Map
     {
         public ProfessionalMap() : base("professionals")
         {
-        }
 
+        }
         public override void Configure(EntityTypeBuilder<Professional> builder)
         {
             base.Configure(builder);
