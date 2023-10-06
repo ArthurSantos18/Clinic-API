@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicAPI.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20231002201657_Recriando Banco de Dados")]
-    partial class RecriandoBancodeDados
+    [Migration("20231006152748_Novos Dados")]
+    partial class NovosDados
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,18 +35,21 @@ namespace ClinicAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("PatientId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id_patient");
 
-                    b.Property<double>("Price")
+                    b.Property<decimal>("Price")
                         .HasPrecision(7, 2)
-                        .HasColumnType("float(7)")
+                        .HasColumnType("decimal(7,2)")
                         .HasColumnName("price");
 
                     b.Property<int>("ProfessionalId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id_professional");
 
                     b.Property<int>("SpecialtyId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id_specialty");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -67,6 +70,58 @@ namespace ClinicAPI.Migrations
                     b.HasIndex("SpecialtyId");
 
                     b.ToTable("appointments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PatientId = 1,
+                            Price = 30.5m,
+                            ProfessionalId = 1,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 27, 48, 508, DateTimeKind.Local).AddTicks(8643)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PatientId = 2,
+                            Price = 40.9m,
+                            ProfessionalId = 1,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 27, 48, 508, DateTimeKind.Local).AddTicks(8656)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PatientId = 3,
+                            Price = 60.1m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 2,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 27, 48, 508, DateTimeKind.Local).AddTicks(8658)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PatientId = 3,
+                            Price = 25.4m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 27, 48, 508, DateTimeKind.Local).AddTicks(8659)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PatientId = 4,
+                            Price = 70.2m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 27, 48, 508, DateTimeKind.Local).AddTicks(8660)
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Patient", b =>
@@ -101,6 +156,40 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("patients", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cpf = "12345678944",
+                            Email = "eva@gmail.com",
+                            Name = "Eva",
+                            PhoneNumber = "12346578"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cpf = "12345678955",
+                            Email = "rudolf@gmail.com",
+                            Name = "Rudolf",
+                            PhoneNumber = "87654321"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cpf = "12345678966",
+                            Email = "maria@gmail.com",
+                            Name = "Maria",
+                            PhoneNumber = "87421345"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cpf = "12345678922",
+                            Email = "kyrie@gmail.com",
+                            Name = "Kyrie",
+                            PhoneNumber = "12345678"
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Professional", b =>
@@ -124,6 +213,54 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("professionals", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Name = "Battler"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Name = "Beatrice"
+                        });
+                });
+
+            modelBuilder.Entity("ClinicAPI.Models.Entities.ProfessionalSpecialty", b =>
+                {
+                    b.Property<int>("SpecialtyId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_specialty");
+
+                    b.Property<int>("ProfessionalId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_professional");
+
+                    b.HasKey("SpecialtyId", "ProfessionalId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("professionals_specialties", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            SpecialtyId = 1,
+                            ProfessionalId = 1
+                        },
+                        new
+                        {
+                            SpecialtyId = 1,
+                            ProfessionalId = 2
+                        },
+                        new
+                        {
+                            SpecialtyId = 2,
+                            ProfessionalId = 2
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Specialty", b =>
@@ -147,21 +284,20 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specialties", (string)null);
-                });
 
-            modelBuilder.Entity("ProfessionalSpecialty", b =>
-                {
-                    b.Property<int>("ProfessionalsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecialtiesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProfessionalsId", "SpecialtiesId");
-
-                    b.HasIndex("SpecialtiesId");
-
-                    b.ToTable("ProfessionalSpecialty");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Name = "Psicologia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Name = "Pediatria"
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Appointment", b =>
@@ -191,19 +327,23 @@ namespace ClinicAPI.Migrations
                     b.Navigation("Specialty");
                 });
 
-            modelBuilder.Entity("ProfessionalSpecialty", b =>
+            modelBuilder.Entity("ClinicAPI.Models.Entities.ProfessionalSpecialty", b =>
                 {
-                    b.HasOne("ClinicAPI.Models.Entities.Professional", null)
+                    b.HasOne("ClinicAPI.Models.Entities.Professional", "Professional")
                         .WithMany()
-                        .HasForeignKey("ProfessionalsId")
+                        .HasForeignKey("ProfessionalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ClinicAPI.Models.Entities.Specialty", null)
+                    b.HasOne("ClinicAPI.Models.Entities.Specialty", "Specialty")
                         .WithMany()
-                        .HasForeignKey("SpecialtiesId")
+                        .HasForeignKey("SpecialtyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("Specialty");
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Patient", b =>

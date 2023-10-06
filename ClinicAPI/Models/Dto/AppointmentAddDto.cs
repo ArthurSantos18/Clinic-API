@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClinicAPI.Models.Entities;
 
-namespace ClinicAPI.Models.Entities
+namespace ClinicAPI.Models.Dto
 {
-    public class Appointment : Base
+    public class AppointmentAddDto
     {
         public DateTime Time { get; set; }
         public int Status { get; set; }
         public decimal Price { get; set; }
         public int PatientId { get; set; }
-        public Patient Patient { get; set; }
         public int SpecialtyId { get; set; }
-        public Specialty Specialty { get; set; }
         public int ProfessionalId { get; set; }
-        public Professional Professional { get; set; }
     }
 }

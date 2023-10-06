@@ -6,7 +6,6 @@ namespace ClinicAPI.Repository
     public class BaseRepository : IBaseRepository
     {
         private readonly ClinicContext _clinicContext;
-
         public BaseRepository(ClinicContext clinicContext)
         {
             _clinicContext = clinicContext;
@@ -19,7 +18,7 @@ namespace ClinicAPI.Repository
 
         public void Delete<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
+            _clinicContext.Remove(entity);
         }
 
         public async Task<bool> SaveChangeAsync()
@@ -29,7 +28,7 @@ namespace ClinicAPI.Repository
 
         public void Update<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
+            _clinicContext.Update(entity);
         }
     }
 }

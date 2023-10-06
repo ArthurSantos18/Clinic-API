@@ -1,4 +1,6 @@
 using ClinicAPI.Data;
+using ClinicAPI.Repositories;
+using ClinicAPI.Repositories.Interfaces;
 using ClinicAPI.Repository;
 using ClinicAPI.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +17,20 @@ namespace ClinicAPI
             // Add services to the container.
 
             builder.Services.AddControllers().AddJsonOptions(
-                x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+                options => {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });
+
+
+
 
             builder.Services.AddScoped<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-            
+            builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+            builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
+            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -33,9 +44,10 @@ namespace ClinicAPI
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            {
+            {   
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                
             }
 
             app.UseHttpsRedirection();

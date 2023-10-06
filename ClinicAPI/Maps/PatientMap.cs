@@ -15,9 +15,9 @@ namespace ClinicAPI.Map
             base.Configure(builder);
 
             builder.Property(x => x.Name).HasColumnName("name").HasColumnType("varchar(100)").IsRequired();
-            builder.Property(x => x.Cpf).HasColumnName("cpf").HasColumnType("varchar(11)").IsRequired();
-            builder.Property(x => x.Email).HasColumnName("email").HasColumnType("varchar(50)").IsRequired();
-            builder.Property(x => x.PhoneNumber).HasColumnName("phone_number").HasColumnType("varchar(100)").IsRequired();
+            builder.Property(x => x.Cpf).HasColumnName("cpf").HasColumnType("varchar(11)");
+            builder.Property(x => x.Email).HasColumnName("email").HasColumnType("varchar(50)");
+            builder.Property(x => x.PhoneNumber).HasColumnName("phone_number").HasColumnType("varchar(100)");
         }
     }
 }

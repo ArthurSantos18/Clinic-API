@@ -35,9 +35,9 @@ namespace ClinicAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_patient");
 
-                    b.Property<double>("Price")
+                    b.Property<decimal>("Price")
                         .HasPrecision(7, 2)
-                        .HasColumnType("float(7)")
+                        .HasColumnType("decimal(7,2)")
                         .HasColumnName("price");
 
                     b.Property<int>("ProfessionalId")
@@ -67,6 +67,58 @@ namespace ClinicAPI.Migrations
                     b.HasIndex("SpecialtyId");
 
                     b.ToTable("appointments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PatientId = 1,
+                            Price = 30.50m,
+                            ProfessionalId = 1,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 34, 26, 396, DateTimeKind.Local).AddTicks(9811)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PatientId = 2,
+                            Price = 40.90m,
+                            ProfessionalId = 1,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 34, 26, 396, DateTimeKind.Local).AddTicks(9824)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PatientId = 3,
+                            Price = 60.00m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 2,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 34, 26, 396, DateTimeKind.Local).AddTicks(9825)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PatientId = 3,
+                            Price = 25.45m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 34, 26, 396, DateTimeKind.Local).AddTicks(9827)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PatientId = 4,
+                            Price = 70.20m,
+                            ProfessionalId = 2,
+                            SpecialtyId = 1,
+                            Status = 1,
+                            Time = new DateTime(2023, 10, 6, 12, 34, 26, 396, DateTimeKind.Local).AddTicks(9828)
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Patient", b =>
@@ -101,6 +153,40 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("patients", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Cpf = "12345678944",
+                            Email = "eva@gmail.com",
+                            Name = "Eva",
+                            PhoneNumber = "12346578"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Cpf = "12345678955",
+                            Email = "rudolf@gmail.com",
+                            Name = "Rudolf",
+                            PhoneNumber = "87654321"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Cpf = "12345678966",
+                            Email = "maria@gmail.com",
+                            Name = "Maria",
+                            PhoneNumber = "87421345"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cpf = "12345678922",
+                            Email = "kyrie@gmail.com",
+                            Name = "Kyrie",
+                            PhoneNumber = "12345678"
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Professional", b =>
@@ -124,6 +210,20 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("professionals", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Name = "Battler"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Name = "Beatrice"
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.ProfessionalSpecialty", b =>
@@ -141,6 +241,23 @@ namespace ClinicAPI.Migrations
                     b.HasIndex("ProfessionalId");
 
                     b.ToTable("professionals_specialties", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            SpecialtyId = 1,
+                            ProfessionalId = 1
+                        },
+                        new
+                        {
+                            SpecialtyId = 1,
+                            ProfessionalId = 2
+                        },
+                        new
+                        {
+                            SpecialtyId = 2,
+                            ProfessionalId = 2
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Specialty", b =>
@@ -164,6 +281,20 @@ namespace ClinicAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("specialties", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Name = "Psicologia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Name = "Pediatria"
+                        });
                 });
 
             modelBuilder.Entity("ClinicAPI.Models.Entities.Appointment", b =>
