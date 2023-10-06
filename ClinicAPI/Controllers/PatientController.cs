@@ -22,19 +22,13 @@ namespace ClinicAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var patients = await _patientRepository.GetAllPatientsAsync();
+            var result = await _patientRepository.GetAllPatientsAsync();
 
-            List<PatientDto> result = new List<PatientDto>();
-
-            foreach (var patient in patients)
+            if (result.Any())
             {
-                result.Add(_mapper.Map<PatientDto>(patient));
-            }
-
-            if (result.Any()) {
                 return Ok(result);
             }
-            return BadRequest("Patients not founds");
+            return NotFound("Patients not founds");
         }
 
         [HttpGet("(Id)")]
@@ -48,7 +42,7 @@ namespace ClinicAPI.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest("Patient not founds");
+            return NotFound("Patient not founds");
         }
 
         [HttpPost]
@@ -56,8 +50,8 @@ namespace ClinicAPI.Controllers
         {
             if (patient != null)
             {
-                var patientAdd = _mapper.Map<Patient>(patient);
-                _patientRepository.Add(patientAdd);
+                var result = _mapper.Map<Patient>(patient);
+                _patientRepository.Add(result);
                 if (await _patientRepository.SaveChangeAsync())
                 {
                     return Ok("Patient added");
@@ -65,6 +59,44 @@ namespace ClinicAPI.Controllers
                 return BadRequest("Patient was not saved");
             }
             return BadRequest("Invalid Data");
+        }
+
+        [HttpPut("(Id)")]
+        public async Task<IActionResult> Put(int id, PatientUpdateDto patient)
+        {
+            if (id > 0)
+            {
+                var patientDatabase = await _patientRepository.GetByIdAsync(id);
+                var result = _mapper.Map(patient, patientDatabase);
+
+                _patientRepository.Update(result);
+
+                if (await _patientRepository.SaveChangeAsync())
+                {
+                    return Ok("Patient updated");
+                }
+                return BadRequest("Patient was not update");
+            }
+            return BadRequest("Invalid Id");
+        }
+
+        [HttpDelete("(Id)")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id > 0)
+            {
+                var result = await _patientRepository.GetByIdAsync(id);
+                
+
+                if (result != null)
+                {
+                    _patientRepository.Delete(result);
+                    await _patientRepository.SaveChangeAsync();
+                    return Ok("Patient deleted");
+                }
+                return NotFound("Patient not found");
+            }
+            return BadRequest("Invalid Id");
         }
     }
 }

@@ -9,7 +9,6 @@ namespace ClinicAPI.Repository
     public class PatientRepository : BaseRepository, IPatientRepository
     {
         private readonly ClinicContext _context;
-        
         public PatientRepository(ClinicContext context) : base(context)
         {
             _context = context;
