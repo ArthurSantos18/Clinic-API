@@ -22,9 +22,6 @@ namespace ClinicAPI
                     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
 
-
-
-
             builder.Services.AddScoped<IBaseRepository, BaseRepository>();
             builder.Services.AddScoped<IPatientRepository, PatientRepository>();
             builder.Services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
