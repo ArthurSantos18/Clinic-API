@@ -1,4 +1,4 @@
-<h1>Contato-MVC</h1>
+<h1>Clinic-API</h1>
 <p>Uma API de gerenciamento de consultas de uma clínica médica utilizando Asp-Net Core API com Swagger UI</p>
 
 <h2>Descrição</h2>
