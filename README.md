@@ -1,5 +1,5 @@
 <h1>Clinic-API</h1>
-<p>Uma API REST de gerenciamento de consultas de uma clínica médica utilizando Asp-Net Core API com Swagger UI</p>
+<p>API REST para gerenciamento de consultas de uma clínica médica, desenvolvida com **ASP.NET Core**, com foco em modelagem de domínio, operações CRUD.</p>
 
 <h2>Descrição</h2>
 <p>Esse projeto consiste em uma API para gerenciar consultas, onde é possível criar as consultas informando os dados do paciente, do médico e da consulta.</p>
