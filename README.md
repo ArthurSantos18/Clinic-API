@@ -33,7 +33,7 @@
 <h2>💻 Tecnologias utilizadas</h2>
 <ul>
   <li>C# 10</li>
-  <li>.NET 8.0</li>
+  <li>.NET 6.0</li>
   <li>Entity Framework 7.0.11</li>
   <li>SQL Server</li>
 </ul>
@@ -45,7 +45,7 @@
 <p>Antes de começar, certifique-se de ter instalado em sua máquina:</p>
 
 <ul>
-  <li><a href="https://dotnet.microsoft.com/pt-br/download">.NET SDK</a> (compatível com o projeto)</li>
+  <li><a href="https://dotnet.microsoft.com/pt-br/download">.NET 6.0 SDK</a> (compatível com o projeto)</li>
   <li><a href="https://www.microsoft.com/pt-br/sql-server/sql-server-downloads">SQL Server</a></li>
 </ul>
 
